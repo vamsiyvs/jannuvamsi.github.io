@@ -6,11 +6,9 @@ on:
 jobs:
   first_job:
     name: My First Job
-    runs_on: ubuntu_latest
+    runs-on: ubuntu-latest
     steps:
       - run: echo "Hello world ${{ github.actor }}."
       - name: Checkout
         uses: actions/checkout@v4.2.2
       - run: tree
-
-      
