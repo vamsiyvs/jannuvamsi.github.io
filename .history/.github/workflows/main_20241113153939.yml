@@ -1,0 +1,48 @@
+name: My First Workflow
+on:
+  push:
+    branches:
+      - main
+jobs:
+  first_job:
+    name: My First Job
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "Hello ${{ vars.WHO_TO_GREET }}  from ${{ github.actor }}."
+          echo "My secret is  ${{ secrets.MY_SECRET }}."
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - run: tree
+  second_job:
+    name: Test
+    runs-on: ubuntu-latest
+    environment: Test
+    needs: first_job
+    steps:
+      - run: |
+          echo "Hello ${{ vars.WHO_TO_GREET }}  from ${{ github.actor }}."
+          sec=$(echo ${{ secrets.MY_SECRET }} | sed 's/./& /g')
+          echo "My secret is  '$sec'."
+  third_job:
+    name: Load-Test
+    runs-on: ubuntu-latest
+    environment: Load-Test
+    needs: first_job
+    steps:
+      - run: |
+          echo "Hello ${{ vars.WHO_TO_GREET }}  from ${{ github.actor }}."
+          sec=$(echo ${{ secrets.MY_SECRET }} | sed 's/./& /g')
+          echo "My secret is  '$sec'."
+  fourth_job:
+    name: Production
+    runs-on: ubuntu-latest
+    environment:
+      name: Production
+      url: https://writeabout.net
+    needs: [second_job, third_job]
+    steps:
+      - run: |
+          echo "Hello ${{ vars.WHO_TO_GREET }}  from ${{ github.actor }}."
+          sec=$(echo ${{ secrets.MY_SECRET }} | sed 's/./& /g')
+          echo "My secret is  '$sec'."
