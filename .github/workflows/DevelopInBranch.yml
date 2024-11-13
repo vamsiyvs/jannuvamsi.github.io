@@ -7,5 +7,5 @@ jobs:
     steps:
       - run: |
           echo "Workflow triggered in branch '${{ github.ref }}'."
-          Echo "Workflow triggered by event '${{ github.event_name }}'."
-          Echo "Workflow triggered by actor '${{ github.actor }}''."
+          echo "Workflow triggered by event '${{ github.event_name }}'."
+          echo "Workflow triggered by actor '${{ github.actor }}''."
